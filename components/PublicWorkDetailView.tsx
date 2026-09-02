@@ -24,11 +24,13 @@ export function PublicWorkDetailView({ work }: { work: PublicWork }) {
   const externalUrl = getSafeExternalUrl(work.externalUrl);
   const ownerContributor = work.owner ? work.contributors.find((contributor) => contributor.profile.id === work.owner?.id) : undefined;
   const otherContributors = work.contributors.filter((contributor) => contributor.profile.id !== work.owner?.id);
+  const backHref = work.isGroupWork ? '/group-works' : work.owner ? `/members/${work.owner.slug}` : '/members';
+  const backLabel = work.isGroupWork ? t('publicWork.back') : t('publicWork.backToMember');
 
   return (
     <main className="mx-auto max-w-[1400px] px-5 pb-24 pt-32 md:px-10 md:pt-40">
-      <Link href="/group-works" className="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-black">
-        <ArrowLeft aria-hidden="true" size={16} /> {t('publicWork.back')}
+      <Link href={backHref} className="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-black">
+        <ArrowLeft aria-hidden="true" size={16} /> {backLabel}
       </Link>
 
       <div className="mt-10">

@@ -52,7 +52,7 @@ export function Navigation() {
 
   function isCurrent(href: string) {
     if (href === '/') return pathname === '/';
-    if (href === '/group-works') return pathname.startsWith('/group-works') || pathname.startsWith('/works');
+    if (href === '/group-works') return pathname.startsWith('/group-works');
     return pathname.startsWith(href);
   }
 
