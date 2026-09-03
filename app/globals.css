@@ -42,6 +42,24 @@ input[type='file']::file-selector-button { cursor: pointer; }
 .display { font-family: var(--font-rounded); letter-spacing: -.07em; }
 .mono-label { font-family: var(--font-mono); letter-spacing: .11em; text-transform: uppercase; }
 .break-anywhere { overflow-wrap: anywhere; word-break: break-word; }
+.home-page-background {
+  background-color: #8fd2ff;
+  background-image: url('/assets/polaris-elements/scattered-page-cream-headphones.png');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.home-copy-glow::before {
+  content: '';
+  position: absolute;
+  inset: -4rem -3rem;
+  z-index: -1;
+  border-radius: 45%;
+  background: rgba(188, 228, 255, .52);
+  filter: blur(30px);
+  pointer-events: none;
+}
 .skip-link { position: fixed; left: 1rem; top: 1rem; z-index: 100; transform: translateY(-200%); border: 2px solid var(--ink); background: var(--lime); color: var(--ink); padding: .65rem .9rem; font-size: .875rem; font-weight: 700; }
 .skip-link:focus { transform: translateY(0); }
 .glass-panel { border: 1px solid rgba(255, 255, 255, .8); background: rgba(255, 255, 255, .55); box-shadow: 0 14px 40px rgba(37, 95, 168, .08); backdrop-filter: blur(16px); }
@@ -70,4 +88,8 @@ input[type='file']::file-selector-button { margin-right: .75rem; border: 0; bord
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+@media (max-width: 768px) {
+  .home-page-background { background-position: 56% center; background-attachment: scroll; }
+  .home-copy-glow::before { inset: -2rem -1rem; background: rgba(188, 228, 255, .7); }
 }
