@@ -429,7 +429,7 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
           )}
 
           <div className="rounded-[1.2rem] border border-denim/15 bg-white/30 p-5 md:p-7">
-            <FilePicker id="cover-file" label={t('workForm.coverFile')} hint={t('workForm.coverHint')} accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" selectedFile={coverFile} existingPath={work?.coverUrl} onSelect={(file) => selectFile('cover', file)} />
+            <FilePicker id="cover-file" label={mode === 'edit' && work?.coverUrl ? t('workForm.replaceCoverFile') : t('workForm.coverFile')} hint={mode === 'edit' && work?.coverUrl ? t('workForm.replaceCoverHint') : t('workForm.coverHint')} accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" selectedFile={coverFile} existingPath={work?.coverUrl} onSelect={(file) => selectFile('cover', file)} />
           </div>
 
           {error && <p id="work-form-error" role="alert" aria-live="assertive" className="text-sm text-red-700">{error}</p>}
@@ -470,7 +470,7 @@ function FilePicker({ id, label, hint, accept, selectedFile, existingPath, onSel
       </p>
       <input id={id} type="file" accept={accept} required={required} aria-describedby={`${id}-hint ${selectedFile || existingName ? `${id}-status` : ''}`.trim()} onChange={(event) => onSelect(event.target.files?.[0] ?? null)} className="block w-full rounded-sm border border-black/15 bg-white/60 p-3 text-sm file:mr-4 file:rounded-sm file:border-0 file:bg-black file:px-3 file:py-2 file:text-xs file:font-medium file:text-white" />
       {selectedFile ? (
-        <p id={`${id}-status`} className="break-anywhere text-sm text-black" role="status">{t('workForm.selectedFile', { name: selectedFile.name, size: formatFileSize(selectedFile.size) })}</p>
+        <p id={`${id}-status`} className="break-anywhere text-sm text-black" role="status">{existingName ? t('workForm.replacementSelected', { name: selectedFile.name, size: formatFileSize(selectedFile.size) }) : t('workForm.selectedFile', { name: selectedFile.name, size: formatFileSize(selectedFile.size) })}</p>
       ) : existingName ? (
         <p id={`${id}-status`} className="break-anywhere text-sm text-neutral-500">{t('workForm.existingFile', { name: existingName })}</p>
       ) : null}
