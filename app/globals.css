@@ -50,6 +50,22 @@ input[type='file']::file-selector-button { cursor: pointer; }
   background-size: cover;
   background-attachment: fixed;
 }
+.public-page-background {
+  position: relative;
+  isolation: isolate;
+}
+.public-page-background::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  background-color: #8fd2ff;
+  background-image: url('/assets/polaris-elements/scattered-page-no-headphones.png');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  pointer-events: none;
+}
 .home-copy-glow::before {
   content: '';
   position: absolute;
@@ -91,5 +107,6 @@ input[type='file']::file-selector-button { margin-right: .75rem; border: 0; bord
 }
 @media (max-width: 768px) {
   .home-page-background { background-position: 56% center; background-attachment: scroll; }
+  .public-page-background::before { background-position: 56% center; }
   .home-copy-glow::before { inset: -2rem -1rem; background: rgba(188, 228, 255, .7); }
 }

@@ -6,7 +6,7 @@ import type { PublicProfile } from '@/lib/public-data';
 
 export function MembersView({ members }: { members: PublicProfile[] }) {
   const { t } = useLanguage();
-  return <main className="mx-auto max-w-[1440px] px-5 pb-28 pt-28 md:px-10 md:pt-36">
+  return <main className="public-page-background mx-auto max-w-[1440px] px-5 pb-28 pt-28 md:px-10 md:pt-36">
     <div className="grid gap-10 md:grid-cols-[1.3fr_.7fr] md:items-end">
       <div>
         <p className="mono-label text-denim">{t('members.eyebrow', { count: members.length })}</p>

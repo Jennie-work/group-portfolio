@@ -20,7 +20,7 @@ export function MemberDetailView({ member, works }: { member: PublicProfile; wor
   const skills = getLocalizedProfileSkills(member, language);
   const avatarUrl = getPublicAvatarUrl(member.avatarUrl);
 
-  return <main className="mx-auto max-w-[1440px] px-5 pb-28 pt-28 md:px-10 md:pt-36">
+  return <main className="public-page-background mx-auto max-w-[1440px] px-5 pb-28 pt-28 md:px-10 md:pt-36">
     <Link href="/members" className="jelly-button inline-flex items-center gap-2 px-4 py-2 text-sm text-ink"><ArrowLeft aria-hidden="true" size={16} /> {t('member.back')}</Link>
     <section className="mt-10 grid gap-12 md:grid-cols-[.9fr_1.25fr] md:gap-20">
       {avatarUrl ? (
