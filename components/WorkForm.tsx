@@ -509,7 +509,7 @@ function FilePicker({ id, label, hint, accept, selectedFile, existingPath, onSel
       </p>
       <input id={id} type="file" accept={accept} required={required} aria-describedby={`${id}-hint ${selectedFile || existingName ? `${id}-status` : ''}`.trim()} onChange={(event) => onSelect(event.target.files?.[0] ?? null)} className="block w-full rounded-sm border border-black/15 bg-white/60 p-3 text-sm file:mr-4 file:rounded-sm file:border-0 file:bg-black file:px-3 file:py-2 file:text-xs file:font-medium file:text-white" />
       {selectedFile ? (
-        <p id={`${id}-status`} className="break-anywhere text-sm" role="status">{t('workForm.selectedFile', { name: selectedFile.name, size: formatFileSize(selectedFile.size) })}</p>
+        <p id={`${id}-status`} className="break-anywhere text-sm text-black" role="status">{t('workForm.selectedFile', { name: selectedFile.name, size: formatFileSize(selectedFile.size) })}</p>
       ) : existingName ? (
         <p id={`${id}-status`} className="break-anywhere text-sm text-neutral-500">{t('workForm.existingFile', { name: existingName })}</p>
       ) : null}
