@@ -63,10 +63,10 @@ export function Navigation() {
   return (
     <header className="fixed top-0 z-50 w-full px-3 pt-3 md:px-6 md:pt-4">
       <div className="glass-panel mx-auto flex h-16 max-w-[1400px] items-center justify-between rounded-[20px] px-3 md:px-5">
-        <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-3" aria-label="BC Youth Group 14 home">
+        <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-3" aria-label="Polaris Youth Group 14 home">
           <span className="pixel-tag grid h-8 w-8 place-items-center bg-lime text-[11px] font-black shadow-[3px_3px_0_#255fa8]">14</span>
           <span className="grid leading-none">
-            <strong className="text-xs tracking-[.08em]">BC YOUTH</strong>
+            <strong className="text-xs tracking-[.08em]">POLARIS YOUTH</strong>
             <small className="mono-label mt-1 text-[8px]">GROUP PORTFOLIO</small>
           </span>
         </Link>

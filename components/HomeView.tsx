@@ -65,7 +65,7 @@ export function HomeView() {
       </section>
 
       <div className="overflow-hidden border-y border-ink/15 bg-white/35 py-3" aria-hidden="true">
-        <p className="mono-label whitespace-nowrap text-center text-[10px] text-denim">BEICHEN YOUTH ✦ GROUP 14 ✦ CREATE TOGETHER ✦ SUMMER ARCHIVE ✦ BEICHEN YOUTH ✦ GROUP 14 ✦ CREATE TOGETHER</p>
+        <p className="mono-label whitespace-nowrap text-center text-[10px] text-denim">POLARIS YOUTH ✦ GROUP 14 ✦ CREATE TOGETHER ✦ SUMMER ARCHIVE ✦ POLARIS YOUTH ✦ GROUP 14 ✦ CREATE TOGETHER</p>
       </div>
 
       <footer className="mx-auto flex max-w-[1400px] flex-col justify-between gap-3 px-5 py-7 text-[10px] text-ink/55 md:flex-row md:px-10">
