@@ -57,27 +57,31 @@ export function Navigation() {
   }
 
   function navLinkClass(href: string) {
-    return `transition-opacity hover:opacity-50 ${isCurrent(href) ? 'font-semibold underline underline-offset-4' : ''}`;
+    return `rounded-full border px-3 py-2 text-xs font-bold transition-all hover:-translate-y-0.5 hover:border-ink/20 hover:bg-white ${isCurrent(href) ? 'border-ink/20 bg-white shadow-[2px_3px_0_rgba(37,95,168,.14)]' : 'border-transparent'}`;
   }
 
   return (
-    <header className="fixed top-0 z-50 w-full border-b border-black/10 bg-[#f5f4f0]/90 backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-[1400px] items-center justify-between px-5 md:px-10">
-        <Link href="/" onClick={() => setOpen(false)} className="display text-xl font-bold tracking-tight" aria-label="FORM 24 home">
-          FORM<span className="text-neutral-400">/</span>24
+    <header className="fixed top-0 z-50 w-full px-3 pt-3 md:px-6 md:pt-4">
+      <div className="glass-panel mx-auto flex h-16 max-w-[1400px] items-center justify-between rounded-[20px] px-3 md:px-5">
+        <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-3" aria-label="BC Youth Group 14 home">
+          <span className="pixel-tag grid h-8 w-8 place-items-center bg-lime text-[11px] font-black shadow-[3px_3px_0_#255fa8]">14</span>
+          <span className="grid leading-none">
+            <strong className="text-xs tracking-[.08em]">BC YOUTH</strong>
+            <small className="mono-label mt-1 text-[8px]">GROUP PORTFOLIO</small>
+          </span>
         </Link>
-        <nav aria-label={t('nav.primaryLabel')} className="hidden items-center gap-8 text-sm font-medium md:flex">
+        <nav aria-label={t('nav.primaryLabel')} className="hidden items-center gap-1 md:flex">
           {links.map((link) => <Link key={link.href} href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined} className={navLinkClass(link.href)}>{t(link.label)}</Link>)}
-          <Link href={memberLink.href} aria-current={isCurrent(memberLink.href) ? 'page' : undefined} className={`rounded-sm border border-black px-3 py-2 transition-colors hover:bg-black hover:text-white ${isCurrent(memberLink.href) ? 'bg-black text-white' : ''}`}>
+          <Link href={memberLink.href} aria-current={isCurrent(memberLink.href) ? 'page' : undefined} className={`jelly-button ml-1 px-4 py-2 text-xs font-bold ${isCurrent(memberLink.href) ? 'bg-blush' : 'bg-white/60'}`}>
             {t(memberLink.label)}
           </Link>
-          <LanguageSwitcher className="border-l border-black/10 pl-6" />
+          <LanguageSwitcher className="ml-2 border-l border-ink/10 pl-3" />
         </nav>
         <button
           type="button"
           ref={menuButtonRef}
           onClick={() => setOpen((current) => !current)}
-          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm p-2 md:hidden"
+          className="jelly-button inline-flex min-h-11 min-w-11 items-center justify-center bg-white/60 p-2 md:hidden"
           aria-label={open ? t('nav.closeMenu') : t('nav.openMenu')}
           aria-expanded={open}
           aria-controls="mobile-navigation"
@@ -86,10 +90,10 @@ export function Navigation() {
         </button>
       </div>
       {open && (
-        <nav id="mobile-navigation" aria-label={t('nav.mobileLabel')} className="flex flex-col gap-5 border-t border-black/10 px-5 py-6 text-lg md:hidden">
-          {links.map((link, index) => <Link onClick={() => setOpen(false)} ref={index === 0 ? firstLinkRef : undefined} key={link.href} href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined} className={isCurrent(link.href) ? 'font-semibold underline underline-offset-4' : undefined}>{t(link.label)}</Link>)}
-          <Link href={memberLink.href} onClick={() => setOpen(false)} aria-current={isCurrent(memberLink.href) ? 'page' : undefined} className={isCurrent(memberLink.href) ? 'font-semibold underline underline-offset-4' : undefined}>{t(memberLink.label)}</Link>
-          <LanguageSwitcher className="border-t border-black/10 pt-5" />
+        <nav id="mobile-navigation" aria-label={t('nav.mobileLabel')} className="glass-panel mx-auto mt-2 flex max-w-[1400px] flex-col gap-2 rounded-[20px] p-4 text-base md:hidden">
+          {links.map((link, index) => <Link onClick={() => setOpen(false)} ref={index === 0 ? firstLinkRef : undefined} key={link.href} href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined} className={`rounded-2xl px-4 py-3 font-bold ${isCurrent(link.href) ? 'bg-white shadow-[2px_3px_0_rgba(37,95,168,.14)]' : 'hover:bg-white/60'}`}>{t(link.label)}</Link>)}
+          <Link href={memberLink.href} onClick={() => setOpen(false)} aria-current={isCurrent(memberLink.href) ? 'page' : undefined} className={`rounded-2xl px-4 py-3 font-bold ${isCurrent(memberLink.href) ? 'bg-blush' : 'hover:bg-white/60'}`}>{t(memberLink.label)}</Link>
+          <LanguageSwitcher className="mt-2 border-t border-ink/10 pt-3" />
         </nav>
       )}
     </header>

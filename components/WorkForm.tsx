@@ -371,14 +371,14 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
   return (
     <main className="min-h-screen pt-20">
       <section className="mx-auto max-w-[900px] px-5 py-16 md:px-10 md:py-24">
-        <Link href="/dashboard" className="inline-flex items-center gap-2 text-sm underline underline-offset-4">
+        <Link href="/dashboard" className="jelly-button inline-flex items-center gap-2 px-4 py-2 text-sm text-ink">
           <ArrowLeft aria-hidden="true" size={16} />
           {t('workForm.back')}
         </Link>
-        <p className="mt-12 text-xs uppercase tracking-widest text-neutral-500">{t(mode === 'create' ? 'workForm.newEyebrow' : 'workForm.editEyebrow')}</p>
-        <h1 className="display mt-5 text-5xl font-semibold leading-none md:text-7xl">{t(mode === 'create' ? 'workForm.newTitle' : 'workForm.editTitle')}</h1>
+        <p className="mono-label mt-12 text-denim">{t(mode === 'create' ? 'workForm.newEyebrow' : 'workForm.editEyebrow')}</p>
+        <h1 className="display mt-5 text-5xl font-semibold leading-[.84] tracking-[-.06em] text-ink md:text-7xl">{t(mode === 'create' ? 'workForm.newTitle' : 'workForm.editTitle')}</h1>
 
-        <form onSubmit={handleSubmit} aria-describedby={error ? 'work-form-error' : undefined} className="mt-12 grid gap-8 border-t border-black/10 pt-8">
+        <form onSubmit={handleSubmit} aria-describedby={error ? 'work-form-error' : undefined} className="glass-panel mt-12 grid gap-8 rounded-[1.8rem] p-5 md:p-8">
           <div className="grid gap-5 md:grid-cols-2">
             <Field label={t('workForm.titleZh')} value={values.titleZh} onChange={(value) => updateValue('titleZh', value)} maxLength={200} required />
             <Field label={t('workForm.titleEn')} value={values.titleEn} onChange={(value) => updateValue('titleEn', value)} maxLength={200} required />
@@ -421,7 +421,7 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
           </div>
 
           {values.isGroupWork && (
-            <fieldset className="grid gap-4 border border-black/10 bg-white/30 p-5 md:p-7">
+            <fieldset className="grid gap-4 rounded-[1.2rem] border border-denim/15 bg-white/30 p-5 md:p-7">
               <legend className="px-2 text-sm font-medium">{t('workForm.contributors')}</legend>
               <p className="text-sm leading-relaxed text-neutral-500">{t('workForm.contributorsHint')}</p>
               {ownerProfile && (
@@ -455,7 +455,7 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
           {values.type === 'link' ? (
             <Field label={t('workForm.externalUrl')} type="url" value={values.externalUrl} onChange={(value) => updateValue('externalUrl', value)} required />
           ) : (
-            <div className="grid gap-6 border border-black/10 bg-white/30 p-5 md:p-7">
+            <div className="grid gap-6 rounded-[1.2rem] border border-denim/15 bg-white/30 p-5 md:p-7">
               {values.type === 'pdf' ? (
                 <FilePicker id="pdf-file" label={t('workForm.pdfFile')} hint={t('workForm.pdfHint')} accept=".pdf,application/pdf" selectedFile={pdfFile} existingPath={work?.type === 'pdf' ? work.fileUrl : null} onSelect={(file) => selectFile('pdf', file)} required={!hasExistingPdf} />
               ) : (
@@ -467,13 +467,13 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
             </div>
           )}
 
-          <div className="border border-black/10 bg-white/30 p-5 md:p-7">
+          <div className="rounded-[1.2rem] border border-denim/15 bg-white/30 p-5 md:p-7">
             <FilePicker id="cover-file" label={t('workForm.coverFile')} hint={t('workForm.coverHint')} accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" selectedFile={coverFile} existingPath={work?.coverUrl} onSelect={(file) => selectFile('cover', file)} />
           </div>
 
           {error && <p id="work-form-error" role="alert" aria-live="assertive" className="text-sm text-red-700">{error}</p>}
 
-          <button type="submit" disabled={saving} className="inline-flex h-12 w-fit items-center justify-center gap-3 rounded-sm bg-ink px-5 text-sm font-medium text-white transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50">
+          <button type="submit" disabled={saving} className="jelly-button inline-flex h-12 w-fit items-center justify-center gap-3 bg-ink px-5 text-sm font-medium text-white transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50">
             <Save aria-hidden="true" size={16} />
             {submitLabel}
           </button>

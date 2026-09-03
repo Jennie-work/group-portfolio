@@ -92,45 +92,45 @@ export function DashboardView({ profile, works, worksError, saved }: DashboardVi
 
   return (
     <main className="min-h-screen pt-20">
-      <section className="mx-auto max-w-[1200px] px-5 py-16 md:px-10 md:py-24">
+      <section className="mx-auto max-w-[1280px] px-5 py-16 md:px-10 md:py-24">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs uppercase tracking-widest text-neutral-500">{t('dashboard.eyebrow')}</p>
-            <h1 className="display mt-5 text-6xl font-semibold leading-none md:text-8xl">{t('dashboard.title')}</h1>
+            <p className="mono-label text-denim">{t('dashboard.eyebrow')}</p>
+            <h1 className="display mt-5 text-6xl font-semibold leading-[.84] tracking-[-.06em] text-ink md:text-8xl">{t('dashboard.title')}</h1>
           </div>
           <Link
             href="/dashboard/works/new"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-sm bg-ink px-4 text-sm font-medium text-white transition-opacity hover:opacity-80"
+            className="jelly-button inline-flex h-11 items-center justify-center gap-2 bg-ink px-4 text-sm font-medium text-white transition-opacity hover:opacity-80"
           >
             <Plus aria-hidden="true" size={16} />
             {t('dashboard.addWork')}
           </Link>
         </div>
-        <div className="mt-12 border-t border-black/10 pt-8">
+        <div className="glass-panel mt-12 rounded-[1.8rem] p-6 md:p-8">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-5">
               {profile.avatarUrl ? (
                 <div
                   role="img"
                   aria-label={t('dashboard.avatarAlt', { name })}
-                  className="h-20 w-20 rounded-sm bg-cover bg-center"
+                  className="h-20 w-20 rounded-2xl border border-white bg-cover bg-center shadow-[4px_5px_0_rgb(37_95_168_/_18%)]"
                   style={{ backgroundImage: `url(${profile.avatarUrl})` }}
                 />
               ) : (
-                <div aria-hidden="true" className="flex h-20 w-20 items-center justify-center rounded-sm bg-ink text-2xl font-semibold text-white">
+                <div aria-hidden="true" className="flex h-20 w-20 items-center justify-center rounded-2xl bg-ink text-2xl font-semibold text-white shadow-[4px_5px_0_rgb(37_95_168_/_18%)]">
                   {name.slice(0, 1).toUpperCase()}
                 </div>
               )}
               <div>
-                <p className="text-2xl font-semibold">{t('dashboard.welcome', { name })}</p>
-                <p className="break-anywhere mt-2 text-sm text-neutral-500">{t('dashboard.emailLabel')}: {profile.email}</p>
+                <p className="display text-3xl font-semibold tracking-[-.04em] text-ink">{t('dashboard.welcome', { name })}</p>
+                <p className="break-anywhere mt-2 text-sm text-ink/60">{t('dashboard.emailLabel')}: {profile.email}</p>
               </div>
             </div>
             <button
               type="button"
               onClick={handleLogout}
               disabled={loggingOut}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-sm border border-black px-4 text-sm font-medium transition-colors hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+              className="jelly-button inline-flex h-11 items-center justify-center gap-2 px-4 text-sm font-medium text-ink disabled:cursor-not-allowed disabled:opacity-50"
             >
               <LogOut aria-hidden="true" size={16} />
               {loggingOut ? t('dashboard.loggingOut') : t('dashboard.logout')}
@@ -139,12 +139,12 @@ export function DashboardView({ profile, works, worksError, saved }: DashboardVi
           {logoutError && <p role="alert" className="mt-4 text-sm text-red-700">{logoutError}</p>}
         </div>
         <section className="mt-16">
-          <div className="mb-8 flex flex-col gap-3 border-b border-black/10 pb-5 md:flex-row md:items-end md:justify-between">
+          <div className="mb-8 flex flex-col gap-3 border-b border-denim/20 pb-5 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="text-xs uppercase tracking-widest text-neutral-500">{t('dashboard.worksLabel')}</p>
-              <h2 className="display mt-3 text-4xl font-semibold md:text-6xl">{t('dashboard.myWorks')}</h2>
+              <p className="mono-label text-denim">{t('dashboard.worksLabel')}</p>
+              <h2 className="display mt-3 text-4xl font-semibold tracking-[-.05em] text-ink md:text-6xl">{t('dashboard.myWorks')}</h2>
             </div>
-            <p className="max-w-md text-sm leading-relaxed text-neutral-500">{t('dashboard.placeholder')}</p>
+            <p className="max-w-md text-sm leading-relaxed text-ink/60">{t('dashboard.placeholder')}</p>
           </div>
 
           {worksError && <p role="alert" className="text-sm text-red-700">{t('dashboard.loadError')}</p>}
@@ -152,7 +152,7 @@ export function DashboardView({ profile, works, worksError, saved }: DashboardVi
           {deleteError && <p role="alert" className="mb-5 text-sm text-red-700">{deleteError}</p>}
 
           {!worksError && works.length === 0 && (
-            <div className="border border-black/10 px-5 py-10 md:px-8">
+            <div className="soft-card rounded-[1.8rem] px-5 py-10 md:px-8">
               <h3 className="text-2xl font-semibold">{t('dashboard.emptyTitle')}</h3>
               <p className="mt-3 max-w-xl text-sm leading-relaxed text-neutral-500">{t('dashboard.emptyBody')}</p>
             </div>
@@ -163,16 +163,16 @@ export function DashboardView({ profile, works, worksError, saved }: DashboardVi
               const title = getLocalizedWorkTitle(work, language) || t('dashboard.untitled');
               const coverUrl = getPublicCoverUrl(work.coverUrl);
               return (
-                <article key={work.id} className="grid gap-5 border-b border-black/10 py-6 md:grid-cols-[160px_1fr_auto] md:items-center">
+                <article key={work.id} className="soft-card grid gap-5 rounded-[1.6rem] p-4 md:grid-cols-[160px_1fr_auto] md:items-center">
                   {coverUrl ? (
                     <div
                       role="img"
                       aria-label={title}
-                      className="aspect-[4/3] rounded-sm bg-cover bg-center"
+                      className="aspect-[4/3] rounded-2xl bg-cover bg-center"
                       style={{ backgroundImage: `url(${coverUrl})` }}
                     />
                   ) : (
-                    <div className="flex aspect-[4/3] items-center justify-center rounded-sm bg-white/60 text-xs uppercase tracking-widest text-neutral-400">{t('dashboard.noCover')}</div>
+                    <div className="y2k-cover-placeholder flex aspect-[4/3] items-center justify-center rounded-2xl text-xs uppercase tracking-widest text-denim">{t('dashboard.noCover')}</div>
                   )}
                   <div>
                     <div className="mb-3 flex flex-wrap gap-2 text-xs uppercase tracking-widest text-neutral-500">
@@ -184,13 +184,13 @@ export function DashboardView({ profile, works, worksError, saved }: DashboardVi
                       <span>/</span>
                       <span>{work.published ? t('dashboard.published') : t('dashboard.draft')}</span>
                     </div>
-                    <h3 className="break-anywhere text-2xl font-semibold">{title}</h3>
+                    <h3 className="display break-anywhere text-3xl font-semibold tracking-[-.04em] text-ink">{title}</h3>
                   </div>
                   <div className="flex flex-wrap gap-3">
                     {work.published && (
                       <Link
                         href={`/works/${work.id}`}
-                        className="inline-flex h-11 items-center justify-center gap-2 rounded-sm border border-black/20 px-3 text-sm font-medium transition-colors hover:border-black"
+                        className="jelly-button inline-flex h-11 items-center justify-center gap-2 px-3 text-sm font-medium text-ink"
                       >
                         <ExternalLink aria-hidden="true" size={15} />
                         {t('dashboard.view')}
@@ -198,7 +198,7 @@ export function DashboardView({ profile, works, worksError, saved }: DashboardVi
                     )}
                     <Link
                       href={`/dashboard/works/${work.id}/edit`}
-                      className="inline-flex h-11 items-center justify-center gap-2 rounded-sm border border-black px-3 text-sm font-medium transition-colors hover:bg-black hover:text-white"
+                      className="jelly-button inline-flex h-11 items-center justify-center gap-2 px-3 text-sm font-medium text-ink"
                     >
                       <Edit3 aria-hidden="true" size={15} />
                       {t('dashboard.edit')}
@@ -207,7 +207,7 @@ export function DashboardView({ profile, works, worksError, saved }: DashboardVi
                       type="button"
                       onClick={() => handleDelete(work)}
                       disabled={deletingId === work.id}
-                      className="inline-flex h-11 items-center justify-center gap-2 rounded-sm border border-black/20 px-3 text-sm font-medium text-red-700 transition-colors hover:border-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="jelly-button inline-flex h-11 items-center justify-center gap-2 px-3 text-sm font-medium text-red-700 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <Trash2 aria-hidden="true" size={15} />
                       {deletingId === work.id ? t('dashboard.deleting') : t('dashboard.delete')}

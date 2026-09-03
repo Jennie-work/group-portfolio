@@ -54,7 +54,7 @@ export function LoginForm({ isConfigured, initialErrorKey }: LoginFormProps) {
           required
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="h-12 rounded-sm border border-black/15 bg-white/60 px-4 text-base outline-none transition-colors focus:border-black"
+          className="h-12 border border-ink/15 px-4 text-base outline-none transition-colors focus:border-ink"
         />
       </div>
       <div className="grid gap-2">
@@ -66,14 +66,14 @@ export function LoginForm({ isConfigured, initialErrorKey }: LoginFormProps) {
           required
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          className="h-12 rounded-sm border border-black/15 bg-white/60 px-4 text-base outline-none transition-colors focus:border-black"
+          className="h-12 border border-ink/15 px-4 text-base outline-none transition-colors focus:border-ink"
         />
       </div>
       {errorKey && <p role="alert" className="text-sm leading-relaxed text-red-700">{t(errorKey)}</p>}
       <button
         type="submit"
         disabled={loading || !isConfigured}
-        className="inline-flex h-12 items-center justify-center gap-3 rounded-sm bg-ink px-5 text-sm font-medium text-white transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-45"
+        className="jelly-button inline-flex h-12 items-center justify-center gap-3 bg-ink px-5 text-sm font-medium text-white transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-45"
       >
         {loading ? t('auth.submitting') : t('auth.submit')}
         <ArrowRight aria-hidden="true" size={16} />

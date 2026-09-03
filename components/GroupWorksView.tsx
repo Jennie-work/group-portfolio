@@ -8,24 +8,17 @@ export function GroupWorksView({ works }: { works: PublicWork[] }) {
   const { t } = useLanguage();
 
   return (
-    <main className="mx-auto max-w-[1400px] px-5 pb-24 pt-40 md:px-10">
-      <p className="text-xs uppercase tracking-widest text-neutral-500">{t('groupWorks.eyebrow', { count: works.length })}</p>
-      <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-        <h1 className="display mt-6 text-6xl font-semibold leading-[.9] md:text-9xl">{t('groupWorks.title1')}<br /><span className="ml-[12vw]">{t('groupWorks.title2')}</span></h1>
-        <p className="max-w-sm text-lg leading-relaxed text-neutral-600">{t('groupWorks.intro')}</p>
+    <main className="mx-auto max-w-[1440px] px-5 pb-28 pt-28 md:px-10 md:pt-36">
+      <p className="mono-label text-denim">{t('groupWorks.eyebrow', { count: works.length })}</p>
+      <div className="grid gap-10 md:grid-cols-[1.3fr_.7fr] md:items-end">
+        <h1 className="display mt-5 text-6xl font-semibold leading-[.84] tracking-[-.06em] text-ink md:text-9xl">{t('groupWorks.title1')}<br /><span className="text-denim">{t('groupWorks.title2')}</span></h1>
+        <p className="glass-panel max-w-md rounded-[1.8rem] p-5 text-base leading-relaxed text-ink/70 md:mb-2">{t('groupWorks.intro')}</p>
       </div>
 
       {works.length > 0 ? (
-        <div className="mt-24 space-y-20">
-          {works.map((work, index) => (
-            <div key={work.id} className="grid gap-6 md:grid-cols-[80px_1fr]">
-              <span className="text-sm text-neutral-400">{String(index + 1).padStart(2, '0')}</span>
-              <DatabaseWorkCard work={work} />
-            </div>
-          ))}
-        </div>
+        <div className="mt-16 grid gap-x-10 gap-y-14 md:grid-cols-2">{works.map((work, index) => <DatabaseWorkCard key={work.id} work={work} index={index} />)}</div>
       ) : (
-        <p className="mt-24 border border-black/10 px-5 py-10 text-neutral-500">{t('groupWorks.empty')}</p>
+        <p className="soft-card mt-16 rounded-[1.8rem] px-6 py-12 text-ink/60">{t('groupWorks.empty')}</p>
       )}
     </main>
   );
