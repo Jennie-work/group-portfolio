@@ -1,4 +1,6 @@
-export type WorkType = 'link' | 'pdf' | 'ppt';
+// `pdf` and `ppt` remain here temporarily so existing rows keep rendering
+// safely until the document-format migration has converted them to `file`.
+export type WorkType = 'link' | 'file' | 'pdf' | 'ppt';
 
 export type DashboardProfile = {
   name: string | null;

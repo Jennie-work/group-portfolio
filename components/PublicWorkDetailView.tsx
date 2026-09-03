@@ -10,6 +10,7 @@ import type { TranslationKey } from '@/lib/i18n';
 
 const workTypeLabels = {
   link: 'work.type.link',
+  file: 'work.type.file',
   pdf: 'work.type.pdf',
   ppt: 'work.type.ppt',
 } satisfies Record<PublicWork['type'], TranslationKey>;
@@ -96,7 +97,18 @@ export function PublicWorkDetailView({ work }: { work: PublicWork }) {
                 </a>
               )}
 
-              {((work.type === 'link' && !externalUrl) || (work.type === 'pdf' && !work.fileUrl) || (work.type === 'ppt' && !work.fileUrl && !work.previewUrl)) && (
+              {work.type === 'file' && work.fileUrl && (
+                <>
+                  <a href={`${fileRoute}?kind=file`} target="_blank" rel="noopener noreferrer" className="jelly-button inline-flex items-center justify-between bg-ink px-5 py-3 text-sm text-white">
+                    {t('publicWork.openFile')} <ExternalLink aria-hidden="true" size={16} />
+                  </a>
+                  <a href={`${fileRoute}?kind=file&download=1`} className="jelly-button inline-flex items-center justify-between px-5 py-3 text-sm">
+                    {t('publicWork.downloadFile')} <Download aria-hidden="true" size={16} />
+                  </a>
+                </>
+              )}
+
+              {((work.type === 'link' && !externalUrl) || (work.type === 'file' && !work.fileUrl) || (work.type === 'pdf' && !work.fileUrl) || (work.type === 'ppt' && !work.fileUrl && !work.previewUrl)) && (
                 <p className="text-sm leading-relaxed text-neutral-500">{t('publicWork.noFile')}</p>
               )}
             </div>

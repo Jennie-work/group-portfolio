@@ -12,6 +12,7 @@ import { getPublicCoverUrl, isOwnedWorkPath } from '@/lib/work-storage';
 
 const workTypeLabels = {
   link: 'work.type.link',
+  file: 'work.type.file',
   pdf: 'work.type.pdf',
   ppt: 'work.type.ppt',
 } satisfies Record<DashboardWork['type'], TranslationKey>;

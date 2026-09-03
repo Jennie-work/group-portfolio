@@ -1,6 +1,6 @@
 import { getSupabaseConfig } from './supabase/env';
 
-export type UploadKind = 'cover' | 'pdf' | 'presentation' | 'preview';
+export type UploadKind = 'cover' | 'document';
 export type UploadValidationError = 'unsupported' | 'tooLarge' | 'empty';
 
 type FileRule = {
@@ -15,23 +15,22 @@ export const uploadRules: Record<UploadKind, FileRule> = {
     mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
     maxBytes: 10 * 1024 * 1024,
   },
-  pdf: {
-    extensions: ['pdf'],
-    mimeTypes: ['application/pdf'],
-    maxBytes: 50 * 1024 * 1024,
-  },
-  presentation: {
-    extensions: ['ppt', 'pptx'],
+  document: {
+    extensions: ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'ppt', 'pptx', 'jpg', 'jpeg', 'png', 'webp'],
     mimeTypes: [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'text/csv',
       'application/vnd.ms-powerpoint',
       'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      'image/jpeg',
+      'image/png',
+      'image/webp',
     ],
     maxBytes: 100 * 1024 * 1024,
-  },
-  preview: {
-    extensions: ['pdf'],
-    mimeTypes: ['application/pdf'],
-    maxBytes: 50 * 1024 * 1024,
   },
 };
 
@@ -60,16 +59,8 @@ export function coverObjectPath(userId: string, workId: string, file: File) {
   return `${userId}/${workId}/cover.${getFileExtension(file.name)}`;
 }
 
-export function documentObjectPath(userId: string, workId: string) {
-  return `${userId}/${workId}/document.pdf`;
-}
-
-export function presentationObjectPath(userId: string, workId: string, file: File) {
-  return `${userId}/${workId}/presentation.${getFileExtension(file.name)}`;
-}
-
-export function previewObjectPath(userId: string, workId: string) {
-  return `${userId}/${workId}/preview.pdf`;
+export function documentObjectPath(userId: string, workId: string, file: File) {
+  return `${userId}/${workId}/document.${getFileExtension(file.name)}`;
 }
 
 export function isOwnedWorkPath(path: string | null, userId: string, workId: string) {

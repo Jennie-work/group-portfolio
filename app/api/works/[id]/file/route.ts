@@ -4,7 +4,7 @@ import { createSupabaseServerClient } from '@/lib/supabase/server';
 type FileWorkRow = {
   id: string;
   owner_id: string;
-  type: 'link' | 'pdf' | 'ppt';
+  type: 'link' | 'file' | 'pdf' | 'ppt';
   file_url: string | null;
   preview_url: string | null;
   published: boolean;
@@ -64,6 +64,7 @@ function getExpectedPath(work: FileWorkRow, kind: 'file' | 'preview') {
     return work.type === 'ppt' ? [`${prefix}preview.pdf`] : null;
   }
 
+  if (work.type === 'file') return work.file_url?.startsWith(prefix) ? [work.file_url] : null;
   if (work.type === 'pdf') return [`${prefix}document.pdf`];
   if (work.type === 'ppt') return [`${prefix}presentation.ppt`, `${prefix}presentation.pptx`];
   return null;

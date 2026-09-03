@@ -9,6 +9,7 @@ import type { TranslationKey } from '@/lib/i18n';
 
 const workTypeLabels = {
   link: 'work.type.link',
+  file: 'work.type.file',
   pdf: 'work.type.pdf',
   ppt: 'work.type.ppt',
 } satisfies Record<PublicWork['type'], TranslationKey>;

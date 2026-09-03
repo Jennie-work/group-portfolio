@@ -14,8 +14,6 @@ import {
   documentObjectPath,
   formatFileSize,
   isOwnedWorkPath,
-  presentationObjectPath,
-  previewObjectPath,
   validateUploadFile,
   type UploadKind,
   type UploadValidationError,
@@ -55,7 +53,7 @@ function initialValues(work?: DashboardWork): WorkFormValues {
     year: String(work?.year ?? new Date().getFullYear()),
     categoryZh: work?.categoryZh ?? work?.category ?? '',
     categoryEn: work?.categoryEn ?? work?.category ?? '',
-    type: work?.type ?? 'link',
+    type: work?.type === 'link' ? 'link' : 'file',
     externalUrl: work?.externalUrl ?? '',
     isGroupWork: work?.isGroupWork ?? false,
     published: work?.published ?? false,
@@ -64,9 +62,7 @@ function initialValues(work?: DashboardWork): WorkFormValues {
 
 const validationKeys: Record<UploadKind, Record<UploadValidationError, TranslationKey>> = {
   cover: { unsupported: 'workForm.coverUnsupported', tooLarge: 'workForm.coverTooLarge', empty: 'workForm.fileEmpty' },
-  pdf: { unsupported: 'workForm.pdfUnsupported', tooLarge: 'workForm.pdfTooLarge', empty: 'workForm.fileEmpty' },
-  presentation: { unsupported: 'workForm.presentationUnsupported', tooLarge: 'workForm.presentationTooLarge', empty: 'workForm.fileEmpty' },
-  preview: { unsupported: 'workForm.previewUnsupported', tooLarge: 'workForm.previewTooLarge', empty: 'workForm.fileEmpty' },
+  document: { unsupported: 'workForm.documentUnsupported', tooLarge: 'workForm.documentTooLarge', empty: 'workForm.fileEmpty' },
 };
 
 export function WorkForm({ mode, ownerId, work, memberOptions, initialContributors = [] }: WorkFormProps) {
@@ -75,9 +71,7 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
   const submitLock = useRef(false);
   const [values, setValues] = useState<WorkFormValues>(() => initialValues(work));
   const [coverFile, setCoverFile] = useState<File | null>(null);
-  const [pdfFile, setPdfFile] = useState<File | null>(null);
-  const [presentationFile, setPresentationFile] = useState<File | null>(null);
-  const [previewFile, setPreviewFile] = useState<File | null>(null);
+  const [documentFile, setDocumentFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [phase, setPhase] = useState<'idle' | 'creating' | 'uploading' | 'updating'>('idle');
   const [error, setError] = useState('');
@@ -88,8 +82,7 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
   ));
   const ownerProfile = memberOptions.find((member) => member.id === ownerId);
   const selectableMembers = memberOptions.filter((member) => member.id !== ownerId);
-  const hasExistingPdf = mode === 'edit' && work?.type === 'pdf' && Boolean(work.fileUrl);
-  const hasExistingPresentation = mode === 'edit' && work?.type === 'ppt' && Boolean(work.fileUrl);
+  const hasExistingDocument = mode === 'edit' && work?.type === 'file' && Boolean(work.fileUrl);
 
   function updateValue<Key extends keyof WorkFormValues>(key: Key, value: WorkFormValues[Key]) {
     setValues((current) => ({ ...current, [key]: value }));
@@ -112,9 +105,7 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
     setError('');
     if (!file) {
       if (kind === 'cover') setCoverFile(null);
-      if (kind === 'pdf') setPdfFile(null);
-      if (kind === 'presentation') setPresentationFile(null);
-      if (kind === 'preview') setPreviewFile(null);
+      if (kind === 'document') setDocumentFile(null);
       return;
     }
 
@@ -125,9 +116,7 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
     }
 
     if (kind === 'cover') setCoverFile(file);
-    if (kind === 'pdf') setPdfFile(file);
-    if (kind === 'presentation') setPresentationFile(file);
-    if (kind === 'preview') setPreviewFile(file);
+    if (kind === 'document') setDocumentFile(file);
   }
 
   async function removeObjects(bucket: 'covers' | 'works', paths: string[]) {
@@ -155,16 +144,8 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
     setPhase(mode === 'create' ? 'creating' : 'uploading');
     setError('');
 
-    if (values.type === 'pdf' && !pdfFile && !hasExistingPdf) {
-      setError(t('workForm.pdfRequired'));
-      setSaving(false);
-      setPhase('idle');
-      submitLock.current = false;
-      return;
-    }
-
-    if (values.type === 'ppt' && !presentationFile && !hasExistingPresentation) {
-      setError(t('workForm.presentationRequired'));
+    if (values.type === 'file' && !documentFile && !hasExistingDocument) {
+      setError(t('workForm.documentRequired'));
       setSaving(false);
       setPhase('idle');
       submitLock.current = false;
@@ -258,7 +239,7 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
 
     let nextCoverPath = work?.coverUrl ?? null;
     let nextFilePath = values.type === work?.type ? work?.fileUrl ?? null : null;
-    let nextPreviewPath = values.type === 'ppt' && work?.type === 'ppt' ? work.previewUrl : null;
+    let nextPreviewPath: string | null = null;
     const uploads: UploadItem[] = [];
 
     if (coverFile) {
@@ -266,25 +247,13 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
       uploads.push({ bucket: 'covers', path: nextCoverPath, file: coverFile, previousPath: work?.coverUrl ?? null });
     }
 
-    if (values.type === 'pdf' && pdfFile) {
-      nextFilePath = documentObjectPath(ownerId, workId);
-      uploads.push({ bucket: 'works', path: nextFilePath, file: pdfFile, previousPath: work?.fileUrl ?? null });
-    }
-
-    if (values.type === 'ppt' && presentationFile) {
-      nextFilePath = presentationObjectPath(ownerId, workId, presentationFile);
-      uploads.push({ bucket: 'works', path: nextFilePath, file: presentationFile, previousPath: work?.fileUrl ?? null });
-    }
-
-    if (values.type === 'ppt' && previewFile) {
-      nextPreviewPath = previewObjectPath(ownerId, workId);
-      uploads.push({ bucket: 'works', path: nextPreviewPath, file: previewFile, previousPath: work?.previewUrl ?? null });
+    if (values.type === 'file' && documentFile) {
+      nextFilePath = documentObjectPath(ownerId, workId, documentFile);
+      uploads.push({ bucket: 'works', path: nextFilePath, file: documentFile, previousPath: work?.fileUrl ?? null });
     }
 
     if (values.type === 'link') {
       nextFilePath = null;
-      nextPreviewPath = null;
-    } else if (values.type === 'pdf') {
       nextPreviewPath = null;
     }
 
@@ -400,8 +369,7 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
               {t('workForm.type')}
               <select value={values.type} onChange={(event) => updateValue('type', event.target.value as WorkType)} className="h-12 rounded-sm border border-black/15 bg-white/60 px-4 text-base outline-none">
                 <option value="link">{t('work.type.link')}</option>
-                <option value="pdf">{t('work.type.pdf')}</option>
-                <option value="ppt">{t('work.type.ppt')}</option>
+                <option value="file">{t('work.type.file')}</option>
               </select>
             </label>
             <label className="grid gap-2 text-sm font-medium">
@@ -456,14 +424,7 @@ export function WorkForm({ mode, ownerId, work, memberOptions, initialContributo
             <Field label={t('workForm.externalUrl')} type="url" value={values.externalUrl} onChange={(value) => updateValue('externalUrl', value)} required />
           ) : (
             <div className="grid gap-6 rounded-[1.2rem] border border-denim/15 bg-white/30 p-5 md:p-7">
-              {values.type === 'pdf' ? (
-                <FilePicker id="pdf-file" label={t('workForm.pdfFile')} hint={t('workForm.pdfHint')} accept=".pdf,application/pdf" selectedFile={pdfFile} existingPath={work?.type === 'pdf' ? work.fileUrl : null} onSelect={(file) => selectFile('pdf', file)} required={!hasExistingPdf} />
-              ) : (
-                <>
-                  <FilePicker id="presentation-file" label={t('workForm.presentationFile')} hint={t('workForm.presentationHint')} accept=".ppt,.pptx,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation" selectedFile={presentationFile} existingPath={work?.type === 'ppt' ? work.fileUrl : null} onSelect={(file) => selectFile('presentation', file)} required={!hasExistingPresentation} />
-                  <FilePicker id="preview-file" label={t('workForm.previewFile')} hint={t('workForm.previewHint')} accept=".pdf,application/pdf" selectedFile={previewFile} existingPath={work?.type === 'ppt' ? work.previewUrl : null} onSelect={(file) => selectFile('preview', file)} />
-                </>
-              )}
+              <FilePicker id="document-file" label={t('workForm.documentFile')} hint={t('workForm.documentHint')} accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,.jpg,.jpeg,.png,.webp,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,image/jpeg,image/png,image/webp" selectedFile={documentFile} existingPath={work?.fileUrl} onSelect={(file) => selectFile('document', file)} required={!hasExistingDocument} />
             </div>
           )}
 
