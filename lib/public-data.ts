@@ -107,4 +107,4 @@ export function attachWorkPeople(
 }
 
 export const publicProfileSelect = 'id, slug, name, role, role_zh, role_en, bio, bio_zh, bio_en, avatar_url, skills, skills_zh, skills_en';
-export const publicWorkSelect = 'id, slug, title, title_zh, title_en, description, description_zh, description_en, category, category_zh, category_en, type, year, cover_url, file_url, preview_url, external_url, is_group_work, published, owner_id';
+export const publicWorkSelect = 'id, slug, title, title_zh, title_en, description, description_zh, description_en, category, category_zh, category_en, type, year, cover_url, file_url, preview_url, external_url, is_group_work, published, updated_at, owner_id';

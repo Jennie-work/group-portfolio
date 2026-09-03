@@ -28,6 +28,7 @@ export type DashboardWork = {
   externalUrl: string | null;
   isGroupWork: boolean;
   published: boolean;
+  updatedAt: string;
 };
 
 export type WorkFormValues = {
@@ -64,6 +65,7 @@ export type WorkRow = {
   external_url: string | null;
   is_group_work: boolean;
   published: boolean;
+  updated_at: string;
 };
 
 export function mapWorkRow(row: WorkRow): DashboardWork {
@@ -87,6 +89,7 @@ export function mapWorkRow(row: WorkRow): DashboardWork {
     externalUrl: row.external_url,
     isGroupWork: row.is_group_work,
     published: row.published,
+    updatedAt: row.updated_at,
   };
 }
 

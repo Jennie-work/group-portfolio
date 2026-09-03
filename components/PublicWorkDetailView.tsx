@@ -20,7 +20,7 @@ export function PublicWorkDetailView({ work }: { work: PublicWork }) {
   const title = getLocalizedWorkTitle(work, language);
   const description = getLocalizedWorkDescription(work, language);
   const category = (language === 'zh' ? work.categoryZh : work.categoryEn) || work.category;
-  const coverUrl = getPublicCoverUrl(work.coverUrl);
+  const coverUrl = getPublicCoverUrl(work.coverUrl, work.updatedAt);
   const fileRoute = `/api/works/${work.id}/file`;
   const externalUrl = getSafeExternalUrl(work.externalUrl);
   const ownerContributor = work.owner ? work.contributors.find((contributor) => contributor.profile.id === work.owner?.id) : undefined;

@@ -19,7 +19,7 @@ export function DatabaseWorkCard({ work, index = 0 }: { work: PublicWork; index?
   const title = getLocalizedWorkTitle(work, language);
   const description = getLocalizedWorkDescription(work, language);
   const category = (language === 'zh' ? work.categoryZh : work.categoryEn) || work.category;
-  const coverUrl = getPublicCoverUrl(work.coverUrl);
+  const coverUrl = getPublicCoverUrl(work.coverUrl, work.updatedAt);
   const people = getWorkPeople(work);
 
   return (

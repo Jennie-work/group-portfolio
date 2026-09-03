@@ -67,8 +67,10 @@ export function isOwnedWorkPath(path: string | null, userId: string, workId: str
   return Boolean(path && !path.startsWith('http') && path.startsWith(`${userId}/${workId}/`));
 }
 
-export function getPublicCoverUrl(path: string | null) {
-  return getPublicStorageUrl('covers', path);
+export function getPublicCoverUrl(path: string | null, version?: string | null) {
+  const url = getPublicStorageUrl('covers', path);
+  if (!url || !version || path?.startsWith('http://') || path?.startsWith('https://')) return url;
+  return `${url}?v=${encodeURIComponent(version)}`;
 }
 
 export function getPublicAvatarUrl(path: string | null) {

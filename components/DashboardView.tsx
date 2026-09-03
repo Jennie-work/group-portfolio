@@ -162,7 +162,7 @@ export function DashboardView({ profile, works, worksError, saved }: DashboardVi
           <div className="grid gap-5">
             {works.map((work) => {
               const title = getLocalizedWorkTitle(work, language) || t('dashboard.untitled');
-              const coverUrl = getPublicCoverUrl(work.coverUrl);
+              const coverUrl = getPublicCoverUrl(work.coverUrl, work.updatedAt);
               return (
                 <article key={work.id} className="soft-card grid gap-5 rounded-[1.6rem] p-4 md:grid-cols-[160px_1fr_auto] md:items-center">
                   {coverUrl ? (

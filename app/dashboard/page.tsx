@@ -34,7 +34,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
   const { data: workRows, error: worksError } = await supabase
     .from('works')
-    .select('id, slug, title, title_zh, title_en, description, description_zh, description_en, category, category_zh, category_en, type, year, cover_url, file_url, preview_url, external_url, is_group_work, published')
+    .select('id, slug, title, title_zh, title_en, description, description_zh, description_en, category, category_zh, category_en, type, year, cover_url, file_url, preview_url, external_url, is_group_work, published, updated_at')
     .eq('owner_id', user.id)
     .order('created_at', { ascending: false })
     .returns<WorkRow[]>();
