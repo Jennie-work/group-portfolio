@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowUpRight, Disc3, Headphones, Sparkles } from 'lucide-react';
 import { useLanguage } from './LanguageProvider';
 
@@ -42,8 +43,9 @@ export function HomeView() {
         <aside className="relative mx-auto min-h-[390px] w-full max-w-[430px] lg:min-h-[500px]" aria-label={t('home.collageLabel')}>
           <p className="mono-label absolute right-2 top-3 z-20 text-right text-[10px] leading-5 text-denim">ONLINE ARCHIVE<br />NO. 02 / 14</p>
           <div className="polaroid-frame float-soft absolute right-8 top-14 w-[76%] rotate-[5deg] p-3 pb-6 md:right-10 md:top-16 md:p-4 md:pb-7">
-            <div className="y2k-cover-placeholder grid aspect-[4/3] place-items-center border border-ink/20">
-              <strong className="pixel-tag bg-white/75 px-3 py-2 text-xs md:text-sm">OUR SUMMER.zip</strong>
+            <div className="relative aspect-[4/3] overflow-hidden border border-ink/20">
+              <Image src="/assets/group-work-cover-y2k.png" alt="Blue Y2K collage with headphones, a compact disc, and stars" fill sizes="(max-width: 768px) 320px, 380px" className="object-cover" priority />
+              <strong className="pixel-tag absolute left-1/2 top-4 -translate-x-1/2 whitespace-nowrap bg-white/85 px-3 py-2 text-xs md:text-sm">OUR SUMMER.zip</strong>
             </div>
             <p className="mt-4 text-sm font-black">{t('home.collageCaption')}</p>
             <p className="mono-label mt-1 text-[9px] text-denim">BCQNS2_GROUP14 / 2026</p>
